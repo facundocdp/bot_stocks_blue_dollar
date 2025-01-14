@@ -9,13 +9,12 @@ import requests
 TELEGRAM_TOKEN = '<YOUR_TELEGRAM_TOKEN' # Replace with your token
 CHAT_ID = '<YOUR_CHAT_ID>' # Replace with your chat id
 
-# Cedear list
-cedears = ['AAPL.BA', 'AMD.BA', 'AMZN.BA', 'AVGO.BA', 'CSCO.BA', 'INTC.BA'] 
-
-# Stocks list
+# Stocks and cedears stocks list
 stocks = ['BMA', 'GCAL', 'SUPV'] 
 
-# Get stocks closing prices
+cedears = ['AAPL.BA', 'AMD.BA', 'AMZN.BA', 'AVGO.BA', 'CSCO.BA', 'INTC.BA'] 
+
+# Get stock closing prices
 def get_stocks():
     message = "📈 **RESUMEN DE ACCIONES AL CIERRE** \n\n"
     for ticker in stocks:
@@ -53,7 +52,6 @@ def get_cedears():
             message += f"⚠️ No se encontraron datos para {ticker}.\n"
     return message
 
-# Get 'blue dollar' price
 def get_blue_dollar_price():
     try:
         response = requests.get('https://api.bluelytics.com.ar/v2/latest')
@@ -87,7 +85,6 @@ async def run_schedule():
 # Schedule for message
 schedule.every().day.at("18:00").do(lambda: asyncio.create_task(send_message()))
 
-# Main program
 async def main():
     print("Bot is running...")
     await run_schedule()
